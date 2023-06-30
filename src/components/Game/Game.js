@@ -15,10 +15,10 @@ let answer = sample(WORDS);
 console.info({ answer });
 
 function Game() {
-  const rows = range(0, limit, 1).map((item) => {
+  const rows = range(0, limit, 1).map(() => {
     return { val: [], id: crypto.randomUUID() };
   });
-  const cells = range(0, 5, 1).map((item) => {
+  const cells = range(0, 5, 1).map(() => {
     return { letter: '', status: '', id1: crypto.randomUUID() };
   });
 
@@ -71,16 +71,13 @@ function Game() {
   return (
     <>
       <GuessResults finGuess={finGuess} />
-      <GuessInput
-        guessNum={guessNum}
-        submitGuess={submitGuess}
-        banner={banner}
-      />
+      <GuessInput guessNum={guessNum} submitGuess={submitGuess} banner={banner} />
       <Keys keys={keys} setKeys={setKeys} finGuess={finGuess} guessNum={guessNum} />
       {banner.showBanner && banner.status && (
         <div className="happy banner">
           <p>
-            <strong>Congratulations!</strong> Got it in <strong>{`${guessNum} guesses`}</strong>.
+            <strong>Congratulations!</strong> Got it in{' '}
+            <strong>{guessNum===1 ? '1 guess' : `${guessNum} guesses`}</strong>.
           </p>
           <button className="refresh" onClick={refresh}>
             Refresh
