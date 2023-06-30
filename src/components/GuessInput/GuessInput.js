@@ -2,13 +2,16 @@ import React from 'react';
 import { NUM_OF_GUESSES_ALLOWED as limit } from '../../constants';
 
 
-function GuessInput({ submitGuess, guessNum, setGuess, guess, banner }) {
+function GuessInput({ submitGuess, guessNum, banner }) {
+  const [guess, setGuess] = React.useState('');
+
   return (
     <form
       className="guess-input-wrapper"
       onSubmit={(event) => {
         event.preventDefault();
-        submitGuess();
+        submitGuess(guess);
+        setGuess('')
       }}
     >
       <label htmlFor="guess-input">Enter guess:</label>
@@ -22,7 +25,8 @@ function GuessInput({ submitGuess, guessNum, setGuess, guess, banner }) {
         title="5 letter word"
         disabled={guessNum >= limit || banner.showBanner ? true : false}
         onChange={(event) => {
-          setGuess(event.target.value.toUpperCase());
+          const typedGuess = event.target.value.toUpperCase();
+          setGuess(typedGuess);
         }}
       ></input>
     </form>

@@ -4,13 +4,13 @@ import React from 'react';
 function GuessResults({ finGuess }) {
   return (
     <div className="guess-results">
-      {finGuess.map((item, index) => {
+      {finGuess.map(({id, val}) => {
         return (
-          <p className="guess" key={item.id}>
-            {item.val.map((lett, index) => {
+          <p className="guess" key={id}>
+            {val.map(({status, letter, id1}) => {
               return (
-                <span className={`cell ${lett.status}`} key={lett.id1}>
-                  {lett.letter}
+                <span className={`cell ${status}`} key={id1}>
+                  {letter}
                 </span>
               );
             })}

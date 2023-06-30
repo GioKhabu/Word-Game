@@ -18,33 +18,31 @@ function Game() {
   const rows = range(0, limit, 1).map((item) => {
     return { val: [], id: crypto.randomUUID() };
   });
-  const squares = range(0, 5, 1).map((item) => {
+  const cells = range(0, 5, 1).map((item) => {
     return { letter: '', status: '', id1: crypto.randomUUID() };
   });
 
   const combined = [...rows];
   for (let i = 0; i < combined.length; i++) {
-    combined[i].val = [...squares];
+    combined[i].val = [...cells];
   }
 
   const [finGuess, setFinGuess] = React.useState(combined);
   const [guessNum, setGuessNum] = React.useState(0);
-  const [guess, setGuess] = React.useState('');
   const [banner, setBanner] = React.useState({ showBanner: false, status: false });
   const [keys, setKeys] = React.useState([]);
 
   function refresh() {
     setFinGuess(combined);
     setGuessNum(0);
-    setGuess('');
     setBanner({ showBanner: false, status: false });
     setKeys([]);
     answer = sample(WORDS);
     console.info({ answer });
   }
 
-  function submitGuess() {
-    if (guess === '' || guessNum >= limit) {
+  function submitGuess(guess) {
+    if (guess.length !== 5) {
       return;
     }
     const newGuesses = [...finGuess];
@@ -54,7 +52,6 @@ function Game() {
     newGuesses[guessNum].val = [...checkedAnswer];
     setFinGuess(newGuesses);
     setGuessNum(guessNum + 1);
-    setGuess('');
   }
 
   React.useEffect(() => {
@@ -76,8 +73,6 @@ function Game() {
       <GuessResults finGuess={finGuess} />
       <GuessInput
         guessNum={guessNum}
-        guess={guess}
-        setGuess={setGuess}
         submitGuess={submitGuess}
         banner={banner}
       />
